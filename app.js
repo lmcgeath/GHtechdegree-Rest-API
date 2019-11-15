@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const userRoutes = require('./routes/users')
 const courseRoutes = require('./routes/courses')
 
-//Import database, so I can test my connection to my database and sync my data. 
+//Import database
 const db = require('./models');
 const sequelize = require('./models').sequelize;
 
