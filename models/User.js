@@ -6,7 +6,7 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
   class User extends Sequelize.Model {}
-  Users.init({
+  User.init({
    firstName: {
       type: Sequelize.STRING,
       allowNull: false, // disallow null
