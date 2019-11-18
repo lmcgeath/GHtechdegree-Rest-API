@@ -1,8 +1,6 @@
 'use strict';
 const Sequelize = require('sequelize');
 
-// Within your User model, define a HasMany association between your User and Course models (i.e. a "User" has many "Courses").
-// Within your Course model, define a BelongsTo association between your Course and User models (i.e. a "Course" belongs to a single "User").
 
 module.exports = (sequelize) => {
   class User extends Sequelize.Model {}

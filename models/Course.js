@@ -10,11 +10,11 @@ module.exports = (sequelize) => {
       allowNull: false, // disallow null
       validate: { 
          notNull: {
-            msg: 'Please provide a value for "first name"',
+            msg: 'Please provide a value for "user ID"',
           },
          notEmpty: {
             // custom error message
-          msg: 'Please provide a value for "first name"',
+          msg: 'Please provide a value for "user ID"',
          }
       },
     },
@@ -38,11 +38,11 @@ module.exports = (sequelize) => {
       allowNull: false, // disallow null
       validate: { 
          notNull: {
-            msg: 'Please provide a value for "title"',
+            msg: 'Please provide a value for "description"',
           },
          notEmpty: {
             // custom error message
-          msg: 'Please provide a value for "title"',
+          msg: 'Please provide a value for "description"',
          }
       },
     }, 
