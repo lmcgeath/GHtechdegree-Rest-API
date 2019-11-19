@@ -17,10 +17,12 @@ const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'tr
 // create the Express app
 const app = express();
 
+// json middleware — helps with being able to use req.body in handlers
+// app.use(express.json());
 app.use(morgan('dev'));
 //sets up body-parser middleware
 // app.use(bodyParser.urlencoded({extended: true}));
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 // TODO setup your api routes here
 app.use('/api', courseRoutes);
