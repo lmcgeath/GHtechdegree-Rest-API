@@ -1,5 +1,0 @@
-{
-	"userId": 4,
-	"title": "New test course",
-	"description": "New test description"
-}

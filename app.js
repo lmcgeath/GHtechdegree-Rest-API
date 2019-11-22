@@ -26,6 +26,8 @@ app.use(bodyParser.json());
 
 // TODO setup your api routes here
 app.use('/api', courseRoutes);
+app.use('/api', userRoutes);
+
 
 // setup a friendly greeting for the root route
 app.get('/', (req, res) => {

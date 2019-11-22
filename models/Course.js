@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 module.exports = (sequelize) => {
   class Course extends Sequelize.Model {}
   Course.init({
-   userId: {//id from the Users table - need to associate
+   userId: {
       type: Sequelize.STRING,
       allowNull: false, // disallow null
       validate: { 
