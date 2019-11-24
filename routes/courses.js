@@ -9,6 +9,8 @@ const authenticateUser = require('../middleware/authUser.js')
 
 // Imports sequelize model
 const Course = require('../models').Course;
+const User = require('../models').User;
+
 const router = express.Router();
 
 /* Handler function to wrap each route. */
@@ -21,16 +23,28 @@ function asyncHandler(cb){
      }
    }
  }
-//Returns a list of all courses in json format
+//Returns a list of all courses and the users  with them in json format
 router.get('/courses', asyncHandler(async (req, res) => {
-   const courses = await Course.findAll({ });
+   const courses = await Course.findAll({ 
+      include: [{
+         model: User,
+         as: 'User',
+         attributes: ['id', 'firstName', 'lastName'] 
+       }]
+   });
   res.json({courses})
   .status(200).end();
 }));
 
-//Returns a the course for the provided course ID
+//Returns a the course for the provided course ID and the user associated with it
 router.get('/courses/:id', asyncHandler(async (req, res) => {
-   const course = await Course.findByPk(req.params.id);
+   const course = await Course.findByPk(req.params.id, {
+      include: [{
+         model: User,
+         as: 'User',
+         attributes: ['id', 'firstName', 'lastName'] 
+       }]
+   });
    res.json({course})
    .status(200).end();
 }))
