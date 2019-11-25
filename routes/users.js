@@ -38,7 +38,9 @@ router.post('/users', (async (req, res) => {
       // Gets the user info from the request body--destructuring.
     let { firstName, lastName, emailAddress, password } = req.body;
       // Hashes the new user's password.
-      password = bcryptjs.hashSync(password)
+      if (password){
+         password = bcryptjs.hashSync(password)
+      }
       user = await User.create({
          firstName,
          lastName,
@@ -49,7 +51,7 @@ router.post('/users', (async (req, res) => {
      .status(201).end();
    } catch (error) {
      if(error.name === "SequelizeValidationError" || "SequelizeUniqueConstraintError") { // checking the error
-       res.json({ errors: error.message})
+      res.status(400).json({ errors: error.message})
       } else {
         return error; // error caught in the asyncHandler's catch block
        }  

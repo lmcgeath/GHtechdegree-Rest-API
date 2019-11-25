@@ -35,12 +35,30 @@ module.exports = (sequelize) => {
     emailAddress: {
       type: Sequelize.STRING,
       allowNull: false, // disallow null
-      defaultValue: false, // set default value
+      // defaultValue: false, // set default 
+      validate: { 
+         notNull: {
+            msg: 'Please provide a value for "email address"',
+          },
+         notEmpty: {
+            // custom error message
+          msg: 'Please provide a value for "email address"',
+         }
+      },
     },
    
     password: {
       type: Sequelize.STRING,
       allowNull: false, // disallow null
+      validate: { 
+         notNull: {
+            msg: 'Please provide a value for "password"',
+          },
+         notEmpty: {
+            // custom error message
+          msg: 'Please provide a value for "password"',
+         }
+      },
 
      } 
    },  { sequelize });

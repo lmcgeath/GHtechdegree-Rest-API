@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 // Imports authenticate user function
 const authenticateUser = require('../middleware/authUser.js')
-
+const { check, validationResult } = require('express-validator');
 
 // Imports sequelize model
 const Course = require('../models').Course;
@@ -23,6 +23,8 @@ function asyncHandler(cb){
      }
    }
  }
+
+
 //Returns a list of all courses and the users  with them in json format
 router.get('/courses', asyncHandler(async (req, res) => {
    const courses = await Course.findAll({ 
@@ -59,7 +61,7 @@ router.post('/courses', authenticateUser, asyncHandler(async (req, res, next) =>
    } catch (error) {
      if(error.name === "SequelizeValidationError") { // checking the error
       //  course = await Course.build(req.body);
-       res.json({ errors: error.errors})
+      res.status(400).json({ errors: error.message})
       } else {
          throw error; // error caught in the asyncHandler's catch block
        }  
@@ -67,22 +69,38 @@ router.post('/courses', authenticateUser, asyncHandler(async (req, res, next) =>
 }))
 
 // Updates a course and returns no content
-router.put('/courses/:id', authenticateUser, (async (req, res, next) => {
+router.put('/courses/:id', authenticateUser,  
+   check('title')
+     .exists()
+     .withMessage('Please provide a value for "title"'),
+   check('description')
+     .exists()
+     .withMessage('Please provide a value for "description"'),
+  (async (req, res) => {
    let course;
    try {
       course = await Course.findByPk(req.params.id);
       if (course){
-      await course.update(req.body);
-      res.status(204).end();
+         await course.update(req.body);
+         // Attempt to get the validation result from the Request object.
+      const errors = validationResult(req);
+
+      // If there are validation errors...
+  if (!errors.isEmpty()) {
+    // Use the Array `map()` method to get a list of error messages.
+    const errorMessages = errors.array().map(error => error.msg);
+
+    // Return the validation errors to the client.
+    res.status(400).json({ errors: errorMessages });
+  }
+   res.status(204).end();
+   }  else {
+      res.status(404).json({
+        message: 'Course Not Found',
+        });
+      } 
    }
-   } catch (error) {
-      if(error.name === "SequelizeValidationError"|| "SequelizeUniqueConstraintError") { // checking the error
-       course = await Course.build(req.body);
-       res.status(400).json({ errors: error.message})
-      }      
-      else {
-         throw error; // error caught in the asyncHandler's catch block
-       }  
+   catch (error) {
      }
 }))
 
