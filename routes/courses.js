@@ -93,7 +93,6 @@ router.put('/courses/:id', authenticateUser,
     // Return the validation errors to the client.
     res.status(400).json({ errors: errorMessages });
   }
-   res.status(204).end();
    }  else {
       res.status(404).json({
         message: 'Course Not Found',
