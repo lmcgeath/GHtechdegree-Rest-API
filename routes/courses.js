@@ -68,7 +68,7 @@ router.post('/courses', authenticateUser, asyncHandler(async (req, res, next) =>
      }
 }))
 
-// Updates a course and returns no content
+// Updates a course and validates request
 router.put('/courses/:id', authenticateUser,  
    check('title')
      .exists()
